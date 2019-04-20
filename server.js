@@ -1,7 +1,7 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-// io.set('transports', [ 'websocket' ]);
+io.set('transports', [ 'websocket' ]);
 
 app.all('/', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -11,11 +11,11 @@ app.all('/', function(req, res, next) {
 
 io.on('connection', function (socket){
    console.log('connection with '+socket.id);
-console.log(socket);
+//console.log(socket);
     io.sockets.emit('hello', 'hellomax');
  
 
-  socket.on('CH', function (from, msg) {
+  socket.on('test', function (from, msg) {
     console.log('MSG', from, ' saying ', msg);
   });
 
