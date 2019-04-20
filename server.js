@@ -1,7 +1,7 @@
 var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-
+var maxSocket;
 server.listen(4000);
 // WARNING: app.listen(80) will NOT work here!
 
@@ -14,21 +14,30 @@ io.on('connection', function (socket) {
 
   
   
-  
   socket.on('hey', function (data) {
     console.log(data);
   });
   
   
-  socket.on('ask', function (data) {
+  socket.on('maxask', function (data) {
+    console.log(socket.id);
     console.log(data);
     socket.emit('answer', { hello: 'world' });
+    maxSocket = socket.id;
   });
   
   
   socket.on('joinFromWeb', function(){
   console.log('joined');
   })
+  
+  socket.on('movin', function (data) {
+    console.log(data);
+    socket.send('data', data);
+  });
+  
+ 
+  
     // Disconnect listener
     // socket.on('disconnect', function() {
     //     console.log('Client disconnected.');

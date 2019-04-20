@@ -31,7 +31,7 @@
   <body>
     <script>
    
-   const socket = io('localhost');
+   const socket = io();
     var words = [];
     
     var PlayerData = {};
@@ -52,23 +52,10 @@
 
 
 
-      socket.on('playerData', playerDataUpdate);
-
-      socket.on('win', function(){
-          window.location.href ="/"+PlayerData.winTrigger;
-      });
-
 
     }
 
-    function playerDataUpdate(pdata){
-      PlayerData.name = pdata[0];
-
-      PlayerData.winTrigger = pdata[2];
-
-      console.log(PlayerData.winTrigger);
-    }
-
+   
 
 
     function mouseDragged() {
@@ -84,7 +71,7 @@
 
       }
       console.log(data);
-      socket.emit('smouse', data);
+      socket.emit('movin', data);
 
     }
 
@@ -106,7 +93,7 @@
 
       }
 
-      socket.emit('smouse', data);
+      socket.emit('movin', data);
       return false;
     }
 
