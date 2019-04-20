@@ -25,6 +25,10 @@ io.on('connection', function (socket) {
     socket.emit('answer', { hello: 'world' });
   });
   
+  
+  socket.on('joinFromWeb', function(){
+  console.log('joined');
+  })
     // Disconnect listener
     // socket.on('disconnect', function() {
     //     console.log('Client disconnected.');
