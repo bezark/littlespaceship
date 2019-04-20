@@ -24,6 +24,7 @@ io.on('connection', function (socket) {
     console.log(data);
     socket.emit('answer', { hello: 'world' });
     maxSocket = socket.id;
+    
   });
   
   
@@ -32,8 +33,9 @@ io.on('connection', function (socket) {
   })
   
   socket.on('movin', function (data) {
-    console.log(data);
-    socket.send('data', data);
+
+    socket.broadcast.emit('data', data);
+    //io.clients[maxSocket].send(data);
   });
   
  
