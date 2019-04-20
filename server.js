@@ -11,9 +11,15 @@ app.get('/', function (req, res) {
 
 io.on('connection', function (socket) {
   console.log("connection at "+socket.id);
+  console.log(socket);
   socket.emit('news', { hello: 'world' });
   socket.on('my other event', function (data) {
     console.log(data);
   });
+  
+    // Disconnect listener
+    socket.on('disconnect', function() {
+        console.log('Client disconnected.');
+    });
 });
 console.log('serverlistening on 4000');
