@@ -1,31 +1,19 @@
 var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-// io.set('transports', [ 'websocket' ]);
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
-// app.all('/', function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
-//   next();
-//  });
+server.listen(4000);
+// WARNING: app.listen(80) will NOT work here!
 
-io.on('connection', function (socket){
-   console.log('connection with '+socket.id);
-//console.log(socket);
-    io.sockets.emit('hello', 'hellomax');
- 
-
-  socket.on('test', function (from, msg) {
-    console.log('MSG', from, ' saying ', msg);
-  });
-
-  
-  
-  socket.on('hey', function (from, msg) {
-    console.log('MSG', from, ' saying ', msg);
-  });
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/views/index.html');
 });
 
-http.listen(4000, function () {
-  console.log('listening on *:3000');
+io.on('connection', function (socket) {
+  console.log("connection at "+socket.id);
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
 });
+console.log('serverlistening on 4000');
