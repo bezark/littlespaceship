@@ -43,7 +43,9 @@ io.on('connection', function (socket) {
     console.log(bigData);
     socket.broadcast.emit('data', bigData);
     //io.clients[maxSocket].send(data);
-    
+var arrayA = [1, 2];
+var arrayB = [3, 4];
+var newArray = arrayA.concat(arrayB);
     ///arr.indexOf(obj)
   });
   
