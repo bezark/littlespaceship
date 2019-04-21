@@ -4,7 +4,7 @@ var io = require('socket.io')(server);
 var maxSocket;
 server.listen(4000);
 // WARNING: app.listen(80) will NOT work here!
-
+var bigData ={}
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
