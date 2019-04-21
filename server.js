@@ -11,7 +11,7 @@ app.get('/', function (req, res) {
 
 io.on('connection', function (socket) {
   console.log("connection at "+socket.id);
-
+ 
   
   
   socket.on('hey', function (data) {
@@ -30,19 +30,24 @@ io.on('connection', function (socket) {
   
   socket.on('joinFromWeb', function(){
   console.log('joined');
+    
+   var clients = io.sockets.clients();
+    console.log(clients);
+    
   })
   
   socket.on('movin', function (data) {
-
-    socket.broadcast.emit('data', data);
+    bigData[socket.id]= data
+    console.log(bigData);
+    socket.broadcast.emit('data', bigData);
     //io.clients[maxSocket].send(data);
   });
   
  
   
     // Disconnect listener
-    // socket.on('disconnect', function() {
-    //     console.log('Client disconnected.');
-    // });
+ socket.on('disconnect', function() {
+        delete bigData[socket.id]
+    });
 });
 console.log('serverlistening on 4000');
