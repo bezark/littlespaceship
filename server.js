@@ -31,8 +31,10 @@ io.on('connection', function (socket) {
   socket.on('joinFromWeb', function(){
   console.log('joined');
     
-   var clients = io.sockets.clients();
-    console.log(clients);
+   bigData[socket.id] = null;
+    var numOkeys  = Object.keys(bigData).length
+    console.log(numOkeys);
+    socket.broadcast.emit('numOkeys', numOkeys);
     
   })
   
