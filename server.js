@@ -5,6 +5,7 @@ var maxSocket;
 server.listen(4000);
 // WARNING: app.listen(80) will NOT work here!
 var bigData ={}
+var socks=[]
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
@@ -35,7 +36,7 @@ io.on('connection', function (socket) {
     var numOkeys  = Object.keys(bigData).length
     console.log(numOkeys);
     socket.broadcast.emit('numOkeys', numOkeys);
-    
+    socks = socks.concat(socket.id)
   })
   
   socket.on('movin', function (data) {
@@ -46,7 +47,7 @@ io.on('connection', function (socket) {
 var arrayA = [1, 2];
 var arrayB = [3, 4];
 var newArray = arrayA.concat(arrayB);
-    ///arr.indexOf(obj)
+    socks.indexOf(socket.id)
   });
   
  
