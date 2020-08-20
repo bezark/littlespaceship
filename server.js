@@ -20,24 +20,24 @@ io.on('connection', function (socket) {
   });
   
   
-  socket.on('maxask', function (data) {
+  socket.on('maxjoin', function (data) {
     console.log(socket.id);
     console.log(data);
-    socket.emit('answer', { hello: 'world' });
-    maxSocket = socket.id;
+    socket.emit('your_id_is', socket.id);
+    
     
   });
   
   
-  socket.on('joinFromWeb', function(){
-  console.log('joined');
+//   socket.on('joinFromWeb', function(){
+//   console.log('joined');
     
-  socks = socks.concat(socket.id)
-   // bigData[socket.id] = null;
-   //  var numOkeys  = Object.keys(bigData).length
-    // console.log(numOkeys);
-    socket.broadcast.emit('numOkeys', socks.length);
-  })
+//   socks = socks.concat(socket.id)
+//    // bigData[socket.id] = null;
+//    //  var numOkeys  = Object.keys(bigData).length
+//     // console.log(numOkeys);
+//     socket.broadcast.emit('numOkeys', socks.length);
+//   })
   
   socket.on('movin', function (data) {
     // bigData[socket.id]= data
