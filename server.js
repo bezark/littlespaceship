@@ -39,10 +39,10 @@ io.on('connection', function (socket) {
 //     socket.broadcast.emit('numOkeys', socks.length);
 //   })
   
-  socket.on('movin', function (data) {
+  socket.on('to_maxhole', function (data) {
     // bigData[socket.id]= data
-    // console.log(bigData);
-    socket.broadcast.emit('data', socks.indexOf(socket.id), data)
+    console.log("broadcasting data:"+data);
+    socket.broadcast.emit('from_maxhole', socks.indexOf(socket.id), data)
   });
   
  
