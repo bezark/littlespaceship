@@ -1,27 +1,19 @@
-Welcome to Glitch
-=================
+# [SOCKET] README
 
-Click `Show` in the header to see your app live. Updates to your code will instantly deploy and update live.
+Socket is a socket for MAX/MSP. Any `socket` object can get or send data to or from any other socket object anywhere in the world. Pretty neat!
 
-**Glitch** is the friendly community where you'll build the app of your dreams. Glitch lets you instantly create, remix, edit, and host an app, bot or site, and you can invite collaborators or helpers to simultaneously edit code with you.
+### Installation
 
-Find out more [about Glitch](https://glitch.com/about).
+Simply download or clone [this repo](https://github.com/bezark/max-socket-hole) to your Documents→Max 8→Library folder.
 
+Then quit and restart Max and create a `socket` object.  You can send numbers, lists or symbols into it and that data will pop out on every other `socket` everywhere else on earth! Wowie!
 
-Your Project
-------------
+`socket` also comes with a help file. Have fun!
 
-On the front-end,
-- edit `public/client.js`, `public/style.css` and `views/index.html`
-- drag in `assets`, like images or music, to add them to your project
+### Best Practices
 
-On the back-end,
-- your app starts at `server.js`
-- add frameworks and packages in `package.json`
-- safely store app secrets in `.env` (nobody can see this but you and people you invite)
+Given that all sockets on earth talk to each other, it is probably wise to prepend any messages with a "destination" and route for that destination on the other side. See the routing tab in the help file for examples.
 
+Eventually it would be nice to implement a room feature to avoid this practice, but I ain't gettin paid for this yet. 🤷
 
-Made by [Glitch](https://glitch.com/)
--------------------
-
-\ ゜o゜)ノ
+Socket is very much in development and if you have any questions or problems please let me know!

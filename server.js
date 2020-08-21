@@ -32,7 +32,7 @@ io.on('connection', function (socket) {
   socket.on('joinRoom', function (room) {
     console.log(socket.id+" joining "+room);
     socket.join(room);
-    console.log(socket.room)
+    
     
     
   });
@@ -61,7 +61,10 @@ io.on('connection', function (socket) {
     socket.broadcast.emit('from_maxhole', socks.indexOf(socket.id), data)
   });
   
- 
+ socket.on('to_room', (room, msg) => {
+    socket.to(room).emit(msg);
+     console.log(room,msg)
+  });
   
     // Disconnect listener
  socket.on('disconnect', function() {
