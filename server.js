@@ -32,6 +32,7 @@ io.on('connection', function (socket) {
   socket.on('joinRoom', function (room) {
     console.log(socket.id+" joining "+room);
     socket.join(room);
+    console.log(socket.room)
     
     
   });
@@ -56,7 +57,7 @@ io.on('connection', function (socket) {
   
   socket.on('to_maxhole', function (data) {
     // bigData[socket.id]= data
-    console.log("broadcasting data:"+data);
+    //console.log("broadcasting data:"+data);
     socket.broadcast.emit('from_maxhole', socks.indexOf(socket.id), data)
   });
   
