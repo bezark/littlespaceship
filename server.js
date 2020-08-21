@@ -62,8 +62,8 @@ io.on('connection', function (socket) {
   });
   
  socket.on('to_room', (room, msg) => {
-    socket.to(room).emit(msg);
-     console.log(room,msg)
+    socket.to(room).emit('from_maxhole',msg);
+     //console.log(room,msg)
   });
   
     // Disconnect listener
@@ -76,4 +76,4 @@ io.on('connection', function (socket) {
     socket.broadcast.emit('numOkeys', socks.length);
     });
 });
-console.log('serverlistening on 4000');
+console.log('serverlistening on 4000')
