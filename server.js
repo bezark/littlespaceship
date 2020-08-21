@@ -29,6 +29,21 @@ io.on('connection', function (socket) {
   });
   
   
+  socket.on('joinRoom', function (room) {
+    console.log(socket.id+" joining "+room);
+    socket.join(room);
+    
+    
+  });
+  
+   socket.on('leaveRoom', function (room) {
+    console.log(socket.id+" leaving "+room);
+    socket.leave(room);
+    
+    
+  });
+  
+  
 //   socket.on('joinFromWeb', function(){
 //   console.log('joined');
     
