@@ -63,7 +63,7 @@ io.on('connection', function (socket) {
   
  socket.on('to_room', (room, msg) => {
     socket.to(room).emit('from_maxhole',msg);
-     //console.log(room,msg)
+     console.log(room,msg)
   });
   
     // Disconnect listener
