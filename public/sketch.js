@@ -13,8 +13,9 @@ function receiveMsg(data) {
 }
 
 function buttonClick(msg) {
+  console.log('sending: ', msg.innerText);
   var data = {
-    msg: msg,
+    msg: msg.innerText,
   };
   socket.emit('msg', msg);
 }
