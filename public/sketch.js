@@ -12,9 +12,9 @@ function receiveMsg(data) {
   console.log(data);
 }
 
-function sendTask(task) {
+function buttonClick(msg) {
   var data = {
-    task: task,
+    msg: msg,
   };
-  socket.emit('task', data);
+  socket.emit('msg', msg);
 }
