@@ -5,7 +5,7 @@ function setup() {
   socket.on('msg', receiveMsg);
 }
 function draw() {
-  backgroun(255, 255, 0);
+  background(255, 255, 0);
 }
 
 function receiveMsg(data) {

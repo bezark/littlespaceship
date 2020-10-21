@@ -4,9 +4,6 @@ var http = require('http').createServer(app);
 const options = {
   /* ... */
 };
-let taskArray = [];
-let voteCounts = {};
-let votesSorted = {};
 const io = require('socket.io')(http, options);
 io.on('connection', socket => {
   console.log(socket.id);
