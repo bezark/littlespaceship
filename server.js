@@ -1,79 +1,26 @@
-var app = require('express')();
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
-var maxSocket;
-server.listen(4000);
-// WARNING: app.listen(80) will NOT work here!
-var bigData ={}
-var socks=[]
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/views/index.html');
+var express = require('express');
+var app = express();
+var http = require('http').createServer(app);
+const options = {
+  /* ... */
+};
+let taskArray = [];
+let voteCounts = {};
+let votesSorted = {};
+const io = require('socket.io')(http, options);
+io.on('connection', socket => {
+  console.log(socket.id);
 });
 
-io.on('connection', function (socket) {
-  console.log("connection at "+socket.id);
- 
-  
-  
-  socket.on('hey', function (data) {
-    console.log(data);
-  });
-  
-  
-  socket.on('maxjoin', function (data) {
-    console.log(socket.id);
-    console.log(data);
-    socket.emit('your_id_is', socket.id);
-    
-    
-  });
-  
-  
-  socket.on('joinRoom', function (room) {
-    console.log(socket.id+" joining "+room);
-    socket.join(room);
-    
-    
-    
-  });
-  
-   socket.on('leaveRoom', function (room) {
-    console.log(socket.id+" leaving "+room);
-    socket.leave(room);
-    
-    
-  });
-  
-  
-//   socket.on('joinFromWeb', function(){
-//   console.log('joined');
-    
-//   socks = socks.concat(socket.id)
-//    // bigData[socket.id] = null;
-//    //  var numOkeys  = Object.keys(bigData).length
-//     // console.log(numOkeys);
-//     socket.broadcast.emit('numOkeys', socks.length);
-//   })
-  
-  socket.on('to_maxhole', function (data) {
-    // bigData[socket.id]= data
-    //console.log("broadcasting data:"+data);
-    socket.broadcast.emit('from_maxhole', socks.indexOf(socket.id), data)
-  });
-  
- socket.on('to_room', (room, msg) => {
-    socket.to(room).emit('from_maxhole',msg);
-     console.log(room,msg)
-  });
-  
-    // Disconnect listener
- socket.on('disconnect', function() {
-   
-   var index = socks.indexOf(socket.id);
-    if (index > -1) {
-      socks.splice(index, 1);
-    }
-    socket.broadcast.emit('numOkeys', socks.length);
-    });
+// routes
+app.use('/', express.static('public'));
+
+http.listen(process.env.PORT || 3000, process.env.IP, () => {
+  console.log('listening on *:3000');
 });
-console.log('serverlistening on 4000')
+
+io.sockets.on('connection', socket => {
+  socket.on('msg', data => {
+    socket.broadcast.emit('msg', data);
+  });
+});
