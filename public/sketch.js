@@ -17,5 +17,5 @@ function buttonClick(msg) {
   var data = {
     msg: msg.innerText,
   };
-  socket.emit('msg', msg);
+  socket.emit('msg', data);
 }
