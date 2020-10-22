@@ -2,16 +2,36 @@ class Star {
   constructor() {
     this.x = random(10000);
     this.y = random(10000);
+    this.countDown = 7;
+    this.exploding = false;
+    this.size = random(5, 10);
   }
-  show(camX, camY) {
+  show() {
     fill(255);
     if (
-      this.x - camX > 0 &&
-      this.x - camX < 400 &&
-      this.y - camY > 0 &&
-      this.y - camY < 400
+      dist(width / 2, height / 2, this.x - camera.x, this.y - camera.y) < 20
     ) {
-      ellipse(this.x - camX, this.y - camY, 10);
+      this.exploding = true;
+    }
+    if (
+      this.x - camera.x > 0 &&
+      this.x - camera.x < width &&
+      this.y - camera.y > 0 &&
+      this.y - camera.y < height
+    ) {
+      if (!this.exploding) {
+        ellipse(this.x - camera.x, this.y - camera.y, this.size);
+      } else {
+        fill(255, 0, 255);
+        ellipse(this.x - camera.x, this.y - camera.y, this.size);
+        this.countDown--;
+        this.size *= 1.1;
+      }
+    }
+  }
+  explode() {
+    if (this.countDown === 0) {
+      return true;
     }
   }
 }

@@ -16,7 +16,7 @@ let xBox;
 let yBox;
 
 function setup() {
-  canvas = createCanvas(400, 400);
+  canvas = createCanvas(800, 800);
   canvas.parent('sketch-container');
   socket = io.connect();
   socket.on('msg', receiveMsg);
@@ -30,7 +30,10 @@ function draw() {
   moveShip();
   drawPositionText();
   for (let i = 0; i < stars.length; i++) {
-    stars[i].show(camera.x, camera.y);
+    stars[i].show();
+    if (stars[i].explode() == true) {
+      stars.splice(i, 1);
+    }
   }
 }
 
