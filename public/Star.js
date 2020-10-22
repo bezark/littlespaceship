@@ -6,6 +6,7 @@ class Star {
     this.exploding = false;
     this.size = random(5, 10);
   }
+  //FIXME congested and messy
   show() {
     fill(255);
     if (

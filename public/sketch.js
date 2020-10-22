@@ -6,6 +6,7 @@ let camera = {
   x: 0,
   y: 0,
 };
+// TODO come up with strategy for creation of map and syncing between player instances.
 let map = {
   width: 10000,
   height: 10000,
@@ -57,6 +58,7 @@ function drawShip() {
   rect(width / 2, height / 2, 20);
 }
 
+//TODO convert to vector based movement
 function moveShip() {
   if (camera.x < 0 || camera.x > map.width - width) {
     speed.x *= -1;
