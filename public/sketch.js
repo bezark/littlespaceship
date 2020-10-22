@@ -1,5 +1,6 @@
 let socket;
 let stars = [];
+let ship;
 let canvas;
 let camera = {
   x: 0,
@@ -23,11 +24,12 @@ function setup() {
   for (let i = 0; i < numStars; i++) {
     stars.push(new Star());
   }
+  ship = new Ship();
 }
 function draw() {
   background(0);
-  drawShip();
-  moveShip();
+  ship.draw();
+  ship.move();
   drawPositionText();
   for (let i = 0; i < stars.length; i++) {
     stars[i].show();
