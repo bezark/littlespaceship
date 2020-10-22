@@ -1,19 +1,19 @@
 let socket;
 let stars = [];
-let numStars = 10000;
 let canvas;
 let camera = {
   x: 0,
   y: 0,
+};
+let map = {
   width: 10000,
   height: 10000,
 };
+let numStars = map.width;
 let speed = {
   x: 3.5,
   y: 0.34,
 };
-let xBox;
-let yBox;
 
 function setup() {
   canvas = createCanvas(800, 800);
@@ -56,10 +56,10 @@ function drawShip() {
 }
 
 function moveShip() {
-  if (camera.x < 0 || camera.x > camera.width - width) {
+  if (camera.x < 0 || camera.x > map.width - width) {
     speed.x *= -1;
   }
-  if (camera.y < 0 || camera.y > camera.height - height) {
+  if (camera.y < 0 || camera.y > map.height - height) {
     speed.y *= -1;
   }
   camera.x += speed.x;

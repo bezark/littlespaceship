@@ -1,7 +1,7 @@
 class Star {
   constructor() {
-    this.x = random(10000);
-    this.y = random(10000);
+    this.x = random(map.width);
+    this.y = random(map.height);
     this.countDown = 7;
     this.exploding = false;
     this.size = random(5, 10);
