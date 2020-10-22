@@ -68,6 +68,7 @@ function moveShip() {
 
 function drawPositionText() {
   fill(255);
+  textSize(20);
   text(
     'x: ' + String(round(camera.x)) + ' y: ' + String(round(camera.y)),
     10,
