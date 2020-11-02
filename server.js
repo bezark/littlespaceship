@@ -6,7 +6,7 @@ var http = require('http').createServer(app);
 const options = {
   /* ... */
 };
-
+//TODO decide on what to do with this
 // Socket.io uses some sort of meetadata wrapper that makes it difficult for the arduino to talk to it. Got it working with a regular old ws though
 // actually I only got it working on a local server 
 //const WebSocket = require('ws');
