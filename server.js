@@ -1,24 +1,25 @@
 var express = require('express');
 var app = express();
 var http = require('http').createServer(app);
-const WebSocket = require('ws');
+
 
 const options = {
   /* ... */
 };
 
 // Socket.io uses some sort of meetadata wrapper that makes it difficult for the arduino to talk to it. Got it working with a regular old ws though
-
-const wss = new WebSocket.Server({ port: 8080 });
+// actually I only got it working on a local server 
+//const WebSocket = require('ws');
+// const wss = new WebSocket.Server({ port: 8080 });
  
-wss.on('connection', function connection(ws) {
-  console.log("we got a connection!")
-  ws.on('message', function incoming(message) {
-    console.log('received: %s', message);
-  });
+// wss.on('connection', function connection(ws) {
+//   console.log("we got a connection!")
+//   ws.on('message', function incoming(message) {
+//     console.log('received: %s', message);
+//   });
  
-  ws.send('something');
-});
+//   ws.send('something');
+// });
 
 
 const io = require('socket.io')(http, options);
