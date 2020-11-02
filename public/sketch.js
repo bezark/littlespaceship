@@ -19,9 +19,10 @@ let speed = {
 
 function setup() {
   canvas = createCanvas(800, 800);
-  canvas.parent('sketch-container');
+  canvas.parent("sketch-container");
   socket = io.connect();
-  socket.on('msg', receiveMsg);
+  console.log(socket)
+  socket.on("msg", receiveMsg);
   for (let i = 0; i < numStars; i++) {
     stars.push(new Star());
   }
@@ -45,11 +46,11 @@ function receiveMsg(data) {
 }
 
 function buttonClick(msg) {
-  console.log('sending: ', msg.innerText);
+  console.log("sending: ", msg.innerText);
   var data = {
     msg: msg.innerText,
   };
-  socket.emit('msg', data);
+  socket.emit("msg", data);
 }
 
 function drawShip() {
@@ -74,7 +75,7 @@ function drawPositionText() {
   fill(255);
   textSize(20);
   text(
-    'x: ' + String(round(camera.x)) + ' y: ' + String(round(camera.y)),
+    "x: " + String(round(camera.x)) + " y: " + String(round(camera.y)),
     10,
     20
   );
