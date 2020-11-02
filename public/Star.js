@@ -26,6 +26,7 @@ class Star {
         fill(255, 0, 255);
         ellipse(this.x - camera.x, this.y - camera.y, this.size);
         this.countDown--;
+
         this.size *= 1.1;
       }
     }
