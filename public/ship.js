@@ -11,6 +11,7 @@ class Ship {
     this.systemToCharge = 'none';
     this.speed = createVector(4, 0);
     this.direction = 0;
+    this.shieldRot = 0.
   }
 
   draw() {
@@ -18,6 +19,7 @@ class Ship {
     fill(this.color);
     push();
     translate(width / 2, height / 2);
+    this.drawShield();
     rotate(this.speed.heading());
     triangle(
       this.x + 20,
@@ -29,7 +31,20 @@ class Ship {
     );
     circle(this.x + 10, this.y, 5);
     pop();
+    
   }
+
+drawShield(){
+ push();
+ stroke('teal');
+ strokeWeight(4);
+ noFill();
+ arc(this.x, this.y,this.x+80,this.y+80,this.shieldRot, this.shieldRot+HALF_PI)
+//  console.log('drawing shield')
+ pop();
+
+}
+
   //TODO vectorfy everything
   move() {
     // if (camera.x < 0 || camera.x > map.width - width) {
@@ -54,6 +69,9 @@ class Ship {
     }
     if (data.type == 'thrust') {
       this.rotateShip(data.data);
+    }
+    if (data.type == 'shield') {
+      this.shieldRot= data.data;
     }
   }
   chargeSystems() {

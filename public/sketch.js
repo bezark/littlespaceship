@@ -2,6 +2,9 @@ let socket;
 let stars = [];
 let ship;
 let canvas;
+
+let paused = false;
+
 // TODO come up with strategy for creation of map and syncing between player instances.
 let camera = {
   x: 0,
@@ -28,14 +31,17 @@ function draw() {
   background(0);
 
   ship.draw();
-  ship.move();
-  ship.chargeSystems();
+  if(!paused){
+    ship.move();
+    ship.chargeSystems();
+  }
   for (let i = 0; i < stars.length; i++) {
     stars[i].show();
     if (stars[i].explode() == true) {
       stars.splice(i, 1);
     }
   }
+
   drawUI();
 }
 
@@ -92,6 +98,7 @@ function drawPositionText() {
 function drawUI() {
   drawShipPowerLevels(ship);
   drawPositionText();
+  if(paused){text("PAUSED",width/2,height/2-40);}
 }
 
 function drawShipPowerLevels(ship) {
@@ -106,4 +113,12 @@ function drawShipPowerLevels(ship) {
   rect(width - columnWidth, 0, columnWidth, columnHeight);
   rect(width - columnWidth * 2, 0, columnWidth, columnHeight);
   rect(width - columnWidth * 3, 0, columnWidth, columnHeight);
+}
+
+function keyPressed(){
+  console.log(keyCode)
+  if (keyCode === 27) {
+    paused = !paused
+  }
+
 }
