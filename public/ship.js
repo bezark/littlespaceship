@@ -1,7 +1,6 @@
 class Ship {
   constructor() {
-    this.x = 0;
-    this.y = 0;
+    this.position = createVector(0, 0);
     this.color = 'red';
     this.powerLevels = {
       shields: 0,
@@ -11,7 +10,7 @@ class Ship {
     this.systemToCharge = 'none';
     this.speed = createVector(4, 0);
     this.direction = 0;
-    this.shieldRot = 0.
+    this.shieldRot = 0;
   }
 
   draw() {
@@ -22,35 +21,40 @@ class Ship {
     this.drawShield();
     rotate(this.speed.heading());
     triangle(
-      this.x + 20,
-      this.y,
-      this.x - 20,
-      this.y - 10,
-      this.x - 20,
-      this.y + 10
+      this.position.x + 20,
+      this.position.y,
+      this.position.x - 20,
+      this.position.y - 10,
+      this.position.x - 20,
+      this.position.y + 10
     );
     circle(this.x + 10, this.y, 5);
     pop();
-    
   }
 
-drawShield(){
- push();
- stroke('teal');
- strokeWeight(4);
- noFill();
- arc(this.x, this.y,this.x+80,this.y+80,this.shieldRot, this.shieldRot+HALF_PI)
-//  console.log('drawing shield')
- pop();
-
-}
+  drawShield() {
+    push();
+    stroke('teal');
+    strokeWeight(4);
+    noFill();
+    arc(
+      this.position.x,
+      this.position.y,
+      this.position.x + 80,
+      this.position.y + 80,
+      this.shieldRot,
+      this.shieldRot + HALF_PI
+    );
+    //  console.log('drawing shield')
+    pop();
+  }
 
   //TODO vectorfy everything
   move() {
-    // if (camera.x < 0 || camera.x > map.width - width) {
+    // if (camera.x < 0 || camera.x > spaceMap.width - width) {
     //   this.speed.x *= -1;
     // }
-    // if (camera.y < 0 || camera.y > map.height - height) {
+    // if (camera.y < 0 || camera.y > spaceMap.height - height) {
     //   this.speed.y *= -1;
     // }
     camera.x += this.speed.x;
@@ -71,7 +75,7 @@ drawShield(){
       this.rotateShip(data.data);
     }
     if (data.type == 'shield') {
-      this.shieldRot= data.data;
+      this.shieldRot = data.data;
     }
   }
   chargeSystems() {
