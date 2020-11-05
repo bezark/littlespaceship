@@ -27,6 +27,7 @@ function preload() {
 }
 
 function setup() {
+  textFont(myFont);
   canvas = createCanvas(800, 800);
   canvas.parent('sketch-container');
   socket = io.connect();
@@ -106,22 +107,15 @@ function moveShip() {
 }
 
 function drawPositionText() {
+  textAlign(CENTER, BOTTOM);
   fill(255);
   textSize(20);
-  text(
-    'x: ' +
-      String(round(camera.x)) +
-      ' y: ' +
-      String(round(camera.y)) +
-      ' shields: ' +
-      round(ship.powerLevels.shields) +
-      ' radar: ' +
-      round(ship.powerLevels.radar) +
-      ' thrust: ' +
-      round(ship.powerLevels.thrust),
-    10,
-    20
-  );
+  noStroke();
+  text('x: ' + String(round(camera.x)), 100, 30);
+  text(' y: ' + String(round(camera.y)), 250, 30);
+  text(' shields: ' + round(ship.powerLevels.shields), 400, 30);
+  text(' radar: ' + round(ship.powerLevels.radar), 550, 30);
+  text(' thrust: ' + round(ship.powerLevels.thrust), 700, 30);
 }
 
 function drawUI() {
@@ -141,16 +135,17 @@ function dead() {
     textSize(30);
     textAlign(CENTER, CENTER);
     fill(100, 255, 255);
-    textFont(myFont);
+
     text('OH NO!', width / 2, height / 2);
     textSize(25);
     text('Click to try again', width / 2, height / 2 + 30);
   }
   if (health <= 0 && mouseIsPressed) {
     health = 100;
-    ship.position.x = 0;
-    ship.position.y = 0;
+    camera.x = 0;
+    camera.y = 0;
   }
+  textAlign(LEFT, BOTTOM);
 }
 
 function drawShipPowerLevels(ship) {
@@ -163,9 +158,9 @@ function drawShipPowerLevels(ship) {
   stroke(255);
   fill(0);
   rectMode(CORNER);
-  rect(width - columnWidth, 0, columnWidth, columnHeight);
-  rect(width - columnWidth * 2, 0, columnWidth, columnHeight);
-  rect(width - columnWidth * 3, 0, columnWidth, columnHeight);
+  // rect(width - columnWidth, 0, columnWidth, columnHeight);
+  // rect(width - columnWidth * 2, 0, columnWidth, columnHeight);
+  // rect(width - columnWidth * 3, 0, columnWidth, columnHeight);
 }
 
 function drawHealthBar(health) {
