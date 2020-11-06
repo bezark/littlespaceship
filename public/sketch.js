@@ -291,7 +291,7 @@ function title() {
     textAlign(CENTER, CENTER);
     fill(100, 255, 255);
 
-    text('PCOMP SPACE GAME', width / 2, height / 2);
+    text('LITTLE SPACE SHIP', width / 2, height / 2);
     text('Click to Play', width / 2, height / 2 + 40);
     if (mouseIsPressed) {
       titleScreen = false;
