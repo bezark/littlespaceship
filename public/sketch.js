@@ -275,7 +275,7 @@ function drawShieldBar() {
 }
 
 function keyPressed() {
-  console.log(keyCode);
+  // console.log(keyCode);
   if (keyCode === 27) {
     paused = !paused;
   }

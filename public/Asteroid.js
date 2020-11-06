@@ -93,7 +93,7 @@ class Asteroid {
     ) {
       return true;
     } else {
-      console.log(angle, v, ship.shieldRot);
+      // console.log(angle, v, ship.shieldRot);
       return false;
     }
   }
