@@ -209,6 +209,7 @@ function dead() {
     ship.speed.y = 0;
     ship.shieldRot = TWO_PI;
     ship.powerLevels.shields = 50;
+    score = 0;
     for (let i = 0; i < asteroids.length; i++) {
       asteroids[i].position = createVector(
         random(spaceMap.width),
