@@ -287,11 +287,12 @@ function title() {
     fill(0);
     rect(0, 0, width, height);
     noStroke();
-    textSize(30);
+    textSize(50);
     textAlign(CENTER, CENTER);
     fill(100, 255, 255);
 
-    text('LITTLE SPACE SHIP', width / 2, height / 2);
+    text('LITTLE SPACE SHIP GAME', width / 2, height / 2);
+    textSize(30);
     text('Click to Play', width / 2, height / 2 + 40);
     if (mouseIsPressed) {
       titleScreen = false;
