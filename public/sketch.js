@@ -18,7 +18,7 @@ let spaceMap = {
 };
 let numStars = spaceMap.width;
 let numAsteroids = Math.floor(spaceMap.width / 1);
-numAsteroids = 1;
+// numAsteroids = 1;
 let numPlanets = Math.floor(spaceMap.width / 100);
 
 let myFont;

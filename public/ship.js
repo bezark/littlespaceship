@@ -8,7 +8,7 @@ class Ship {
       thrust: 0,
     };
     this.systemToCharge = 'none';
-    this.speed = createVector(0, 0);
+    this.speed = createVector(4, 0);
     this.direction = 0;
     this.shieldRot = 2 * PI;
   }
