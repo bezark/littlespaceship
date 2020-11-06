@@ -12,7 +12,7 @@ class Star {
     if (
       dist(width / 2, height / 2, this.x - camera.x, this.y - camera.y) < 20
     ) {
-      this.exploding = true;
+      // this.exploding = true;
     }
     if (
       this.x - camera.x > 0 &&

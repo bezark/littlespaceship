@@ -18,6 +18,7 @@ let spaceMap = {
 };
 let numStars = spaceMap.width;
 let numAsteroids = Math.floor(spaceMap.width / 1);
+numAsteroids = 1;
 let numPlanets = Math.floor(spaceMap.width / 100);
 
 let myFont;
@@ -43,11 +44,12 @@ function setup() {
     planets.push(new Planet());
   }
   ship = new Ship();
+  asteroids[0].position.x = width / 2 + 200;
+  asteroids[0].position.y = height / 2 - 1;
 }
 function draw() {
   background(0);
 
-  ship.draw();
   if (!paused) {
     ship.move();
     ship.chargeSystems();
@@ -70,9 +72,31 @@ function draw() {
       planets.splice(i, 1);
     }
   }
-
+  ship.draw();
   drawUI();
   dead();
+  // console.log(asteroids[0].angleToShip(), ship.shieldRot);
+  // console.log(
+  //   asteroids[0].angleToShip(),
+  //   asteroids[0].distanceToShip(),
+  //   asteroids[0].onCourseForShip(),
+  //   asteroids[0].position.x,
+  //   asteroids[0].position.y
+  // );
+  strokeWeight(10);
+  stroke(255);
+  // line(
+  //   width / 2,
+  //   height / 2,
+  //   asteroids[0].position.x - camera.x,
+  //   asteroids[0].position.y - camera.y
+  // );
+  // console.log(asteroids[0].onCourseForShip());
+  // asteroids[0].onCourseForShip();
+  noStroke();
+  if (asteroids[0] != undefined) {
+    asteroids[0].position.x -= 1;
+  }
 }
 
 function receiveMsg(data) {
@@ -96,12 +120,12 @@ function drawShip() {
 
 //TODO convert to vector based movement
 function moveShip() {
-  if (camera.x < 0 || camera.x > spaceMap.width - width) {
-    speed.x *= -1;
-  }
-  if (camera.y < 0 || camera.y > spaceMap.height - height) {
-    speed.y *= -1;
-  }
+  // if (camera.x < 0 || camera.x > spaceMap.width - width) {
+  //   speed.x *= -1;
+  // }
+  // if (camera.y < 0 || camera.y > spaceMap.height - height) {
+  //   speed.y *= -1;
+  // }
   camera.x += speed.x;
   camera.y += speed.y;
 }

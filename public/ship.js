@@ -3,14 +3,14 @@ class Ship {
     this.position = createVector(0, 0);
     this.color = 'red';
     this.powerLevels = {
-      shields: 0,
+      shields: 50,
       radar: 0,
       thrust: 0,
     };
     this.systemToCharge = 'none';
-    this.speed = createVector(4, 0);
+    this.speed = createVector(0, 0);
     this.direction = 0;
-    this.shieldRot = 0;
+    this.shieldRot = 2 * PI;
   }
 
   draw() {
@@ -34,22 +34,23 @@ class Ship {
 
   drawShield() {
     push();
-    stroke('teal');
-    strokeWeight(4);
+    strokeWeight((1 / 10) * this.powerLevels.shields * 2);
     noFill();
+    strokeCap(SQUARE);
+    let g = map(this.powerLevels.shields, 0, 100, 0, 255);
+    stroke(255 - g, 255, 0);
     arc(
       this.position.x,
       this.position.y,
-      this.position.x + 80,
-      this.position.y + 80,
-      this.shieldRot,
-      this.shieldRot + HALF_PI
+      this.position.x + 160,
+      this.position.y + 160,
+      this.shieldRot - (1 / 4) * PI,
+      this.shieldRot + (1 / 4) * PI
     );
     //  console.log('drawing shield')
     pop();
   }
 
-  //TODO vectorfy everything
   move() {
     // if (camera.x < 0 || camera.x > spaceMap.width - width) {
     //   this.speed.x *= -1;
@@ -75,7 +76,7 @@ class Ship {
       this.rotateShip(data.data);
     }
     if (data.type == 'shield') {
-      this.shieldRot = data.data;
+      this.shieldRot = data.data % (2 * PI);
     }
   }
   chargeSystems() {
@@ -83,7 +84,7 @@ class Ship {
       this.powerLevels[this.systemToCharge] =
         this.powerLevels[this.systemToCharge] > 100
           ? 100
-          : this.powerLevels[this.systemToCharge] + 0.01;
+          : this.powerLevels[this.systemToCharge] + 0.1;
     }
     // console.log(this.powerLevels);
   }
