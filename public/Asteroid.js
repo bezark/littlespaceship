@@ -12,16 +12,22 @@ class Asteroid {
       map(this.size, 5, 50, 255, 0),
       255
     );
+    this.lastMovement = '';
+    this.movement = createVector(random(-5, 5), random(-5, 5));
+    this.isMoving = false;
   }
+
   show() {
-    if (this.distanceToShip() <= 80 + this.size / 2 && this.onCourseForShip()) {
+    if (
+      this.distanceToShip() <= 80 + this.size / 2 &&
+      this.onCourseForShip() &&
+      ship.powerLevels.shields > 0
+    ) {
       this.exploding = true;
+      ship.powerLevels.shields -= this.size / 500;
     } else if (this.distanceToShip() < 20) {
       this.exploding = true;
       health -= this.size / 10;
-    }
-    if (this.distanceToShip() < 80 + this.size / 2) {
-      // console.log(this.angleToShip(), ship.shieldRot);
     }
     rectMode(CENTER);
     if (
@@ -54,6 +60,10 @@ class Asteroid {
     if (this.countDown === 0) {
       return true;
     }
+  }
+  randomiseMovement() {
+    this.movement.x = random(-5, 5);
+    this.movement.y = random(-5, 5);
   }
   distanceToShip() {
     let val = dist(

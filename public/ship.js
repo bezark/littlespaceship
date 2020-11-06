@@ -4,11 +4,11 @@ class Ship {
     this.color = 'red';
     this.powerLevels = {
       shields: 50,
-      radar: 0,
-      thrust: 0,
+      radar: 25,
+      thrust: 60,
     };
     this.systemToCharge = 'none';
-    this.speed = createVector(4, 0);
+    this.speed = createVector(0, 0);
     this.direction = 0;
     this.shieldRot = 2 * PI;
   }
@@ -34,7 +34,11 @@ class Ship {
 
   drawShield() {
     push();
-    strokeWeight((1 / 10) * this.powerLevels.shields * 2);
+    strokeWeight(
+      (1 / 10) * this.powerLevels.shields * 2 < 0
+        ? 0
+        : (1 / 10) * this.powerLevels.shields * 2
+    );
     noFill();
     strokeCap(SQUARE);
     let g = map(this.powerLevels.shields, 0, 100, 0, 255);
@@ -52,12 +56,6 @@ class Ship {
   }
 
   move() {
-    // if (camera.x < 0 || camera.x > spaceMap.width - width) {
-    //   this.speed.x *= -1;
-    // }
-    // if (camera.y < 0 || camera.y > spaceMap.height - height) {
-    //   this.speed.y *= -1;
-    // }
     camera.x += this.speed.x;
     camera.y += this.speed.y;
   }
@@ -84,6 +82,8 @@ class Ship {
       this.powerLevels[this.systemToCharge] =
         this.powerLevels[this.systemToCharge] > 100
           ? 100
+          : this.powerLevels[this.systemToCharge] < 0
+          ? 0
           : this.powerLevels[this.systemToCharge] + 0.1;
     }
     // console.log(this.powerLevels);

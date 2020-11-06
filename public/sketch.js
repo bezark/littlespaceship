@@ -6,6 +6,12 @@ let ship;
 let canvas;
 let paused = false;
 let health = 100;
+let score = 0;
+let scoreFrames = 0;
+let scoreAnimation = false;
+let winCondition = false;
+let planetCount;
+let titleScreen = true;
 
 // TODO come up with strategy for creation of spaceMap and syncing between player instances.
 let camera = {
@@ -44,59 +50,83 @@ function setup() {
     planets.push(new Planet());
   }
   ship = new Ship();
-  asteroids[0].position.x = width / 2 + 200;
-  asteroids[0].position.y = height / 2 - 1;
+  planets[0].position.x = width / 2 + 400;
+  planets[0].position.y = height / 2 - 1;
+  planetCount = planets.length;
 }
 function draw() {
-  background(0);
+  if (!titleScreen) {
+    background(0);
 
-  if (!paused) {
-    ship.move();
-    ship.chargeSystems();
-  }
-  for (let i = 0; i < stars.length; i++) {
-    stars[i].show();
-    if (stars[i].explode() == true) {
-      stars.splice(i, 1);
+    if (!paused) {
+      ship.move();
+      ship.chargeSystems();
+    }
+    for (let i = 0; i < stars.length; i++) {
+      stars[i].show();
+      if (stars[i].explode() == true) {
+        stars.splice(i, 1);
+      }
+    }
+    for (let i = 0; i < asteroids.length; i++) {
+      asteroids[i].show();
+      if (asteroids[i].explode() == true) {
+        asteroids.splice(i, 1);
+      }
+      if (random(100) < 3) {
+        if (asteroids[i].lastState != asteroids[i].isMoving) {
+          asteroids[i].randomiseMovement();
+        }
+        asteroids[i].isMoving = !asteroids[i].isMoving;
+        asteroids[i].lastState = asteroids[i].isMoving;
+      }
+      if (asteroids[i].isMoving) {
+        asteroids[i].position.sub(asteroids[i].movement);
+      }
+    }
+    for (let i = 0; i < planets.length; i++) {
+      planets[i].show();
+      if (planets[i].explode() == true) {
+        planets.splice(i, 1);
+      }
+    }
+    ship.draw();
+    drawUI();
+    dead();
+    // console.log(asteroids[0].angleToShip(), ship.shieldRot);
+    // console.log(
+    //   asteroids[0].angleToShip(),
+    //   asteroids[0].distanceToShip(),
+    //   asteroids[0].onCourseForShip(),
+    //   asteroids[0].position.x,
+    //   asteroids[0].position.y
+    // );
+    strokeWeight(10);
+    stroke(255);
+    // line(
+    //   width / 2,
+    //   height / 2,
+    //   asteroids[0].position.x - camera.x,
+    //   asteroids[0].position.y - camera.y
+    // );
+    // console.log(asteroids[0].onCourseForShip());
+    // asteroids[0].onCourseForShip();
+    noStroke();
+    if (asteroids[0] != undefined) {
+      asteroids[0].position.x -= 1;
+    }
+    if (scoreAnimation) {
+      scoreAnimate();
     }
   }
-  for (let i = 0; i < asteroids.length; i++) {
-    asteroids[i].show();
-    if (asteroids[i].explode() == true) {
-      asteroids.splice(i, 1);
-    }
-  }
-  for (let i = 0; i < planets.length; i++) {
-    planets[i].show();
-    if (planets[i].explode() == true) {
-      planets.splice(i, 1);
-    }
-  }
-  ship.draw();
-  drawUI();
-  dead();
-  // console.log(asteroids[0].angleToShip(), ship.shieldRot);
-  // console.log(
-  //   asteroids[0].angleToShip(),
-  //   asteroids[0].distanceToShip(),
-  //   asteroids[0].onCourseForShip(),
-  //   asteroids[0].position.x,
-  //   asteroids[0].position.y
-  // );
-  strokeWeight(10);
-  stroke(255);
-  // line(
-  //   width / 2,
-  //   height / 2,
-  //   asteroids[0].position.x - camera.x,
-  //   asteroids[0].position.y - camera.y
-  // );
-  // console.log(asteroids[0].onCourseForShip());
-  // asteroids[0].onCourseForShip();
-  noStroke();
-  if (asteroids[0] != undefined) {
-    asteroids[0].position.x -= 1;
-  }
+  title();
+}
+
+function scoreAnimate() {
+  fill(0, 255, 0);
+  text('+', width / 2 - 10, height / 2 + scoreFrames);
+  if (scoreFrames == 0) scoreAnimation = false;
+  scoreFrames--;
 }
 
 function receiveMsg(data) {
@@ -133,18 +163,19 @@ function moveShip() {
 function drawPositionText() {
   textAlign(CENTER, BOTTOM);
   fill(255);
-  textSize(20);
   noStroke();
-  text('x: ' + String(round(camera.x)), 100, 30);
-  text(' y: ' + String(round(camera.y)), 250, 30);
-  text(' shields: ' + round(ship.powerLevels.shields), 400, 30);
-  text(' radar: ' + round(ship.powerLevels.radar), 550, 30);
-  text(' thrust: ' + round(ship.powerLevels.thrust), 700, 30);
+  textSize(30);
+  text('SCORE: ' + String(score), 100, 40);
+  // text(' y: ' + String(round(camera.y)), 250, 30);
+  text(' shields: ' + round(ship.powerLevels.shields), 300, 40);
+  text(' radar: ' + round(ship.powerLevels.radar), 500, 40);
+  text(' thrust: ' + round(ship.powerLevels.thrust), 700, 40);
 }
 
 function drawUI() {
   drawShipPowerLevels(ship);
   drawHealthBar(health);
+  // drawShieldBar();
   drawPositionText();
   if (paused) {
     text('PAUSED', width / 2, height / 2 - 40);
@@ -160,14 +191,30 @@ function dead() {
     textAlign(CENTER, CENTER);
     fill(100, 255, 255);
 
-    text('OH NO!', width / 2, height / 2);
+    text(
+      'You found ' + score + '  of ' + planetCount + ' planets',
+      width / 2,
+      height / 2
+    );
     textSize(25);
-    text('Click to try again', width / 2, height / 2 + 30);
+    text('Click to try again', width / 2, height / 2 + 40);
+    ship.speed.x = 0;
+    ship.speed.y = 0;
   }
   if (health <= 0 && mouseIsPressed) {
     health = 100;
     camera.x = 0;
     camera.y = 0;
+    ship.speed.x = 4;
+    ship.speed.y = 0;
+    ship.shieldRot = TWO_PI;
+    ship.powerLevels.shields = 50;
+    for (let i = 0; i < asteroids.length; i++) {
+      asteroids[i].position = createVector(
+        random(spaceMap.width),
+        random(spaceMap.height)
+      );
+    }
   }
   textAlign(LEFT, BOTTOM);
 }
@@ -206,10 +253,54 @@ function drawHealthBar(health) {
   rect(width / 4, 100, width / 2, 25);
   strokeWeight(2);
 }
+function drawShieldBar() {
+  rectMode(CORNER);
+  noStroke();
+  fill(0);
+  rect(width / 4, 70, width / 2, 25);
+  fill(
+    ship.powerLevels.shields > 50
+      ? color(0, 255, 0)
+      : ship.powerLevels.shields > 25
+      ? color(255, 150, 0)
+      : color(255, 0, 0)
+  );
+  rect(width / 4, 70, map(ship.powerLevels.shields, 0, 100, 0, width / 2), 25);
+  stroke(255);
+  strokeWeight(5);
+  fill(0, 0);
+  rect(width / 4, 70, width / 2, 25);
+  strokeWeight(2);
+}
 
 function keyPressed() {
   console.log(keyCode);
   if (keyCode === 27) {
     paused = !paused;
+  }
+}
+
+function title() {
+  if (titleScreen) {
+    ship.speed.x = 0;
+    ship.speed.y = 0;
+    fill(0);
+    rect(0, 0, width, height);
+    noStroke();
+    textSize(30);
+    textAlign(CENTER, CENTER);
+    fill(100, 255, 255);
+
+    text('PCOMP SPACE GAME', width / 2, height / 2);
+    text('Click to Play', width / 2, height / 2 + 40);
+    if (mouseIsPressed) {
+      titleScreen = false;
+      health = 100;
+      camera.x = 0;
+      camera.y = 0;
+      ship.speed.x = 4;
+      ship.speed.y = 0;
+      ship.shieldRot = TWO_PI;
+    }
   }
 }
