@@ -23,7 +23,7 @@ let spaceMap = {
   height: 10000,
 };
 let numStars = spaceMap.width;
-let numAsteroids = Math.floor(spaceMap.width / 0.1);
+let numAsteroids = Math.floor(spaceMap.width / 1);
 // numAsteroids = 1;
 let numPlanets = Math.floor(spaceMap.width / 100);
 
